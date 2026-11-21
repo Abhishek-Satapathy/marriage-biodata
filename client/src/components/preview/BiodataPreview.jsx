@@ -72,10 +72,11 @@ function BiodataPreview({ data }) {
   ]
 
   return (
-    <div className="rounded-xl border border-stone-200 bg-white p-4 sm:p-6">
+    <div className="rounded-xl border border-stone-100 bg-[#fffefa] p-4 sm:p-6">
       {/* Profile header */}
       <div className="border-b border-stone-100 pb-6 text-center">
-        <div className="mx-auto mb-4 h-44 w-44 overflow-hidden rounded-full border-4 border-brand/20 bg-cream sm:h-56 sm:w-56">
+        <img src="/ganesha-mark.png" alt="Ganesh emblem" className="mx-auto mb-3 h-11 w-[88px] object-contain" />
+        <div className="mx-auto mb-4 h-44 w-44 overflow-hidden rounded-full border-4 border-brand/30 bg-cream shadow-[0_0_0_5px_rgba(222,199,168,0.24)] sm:h-56 sm:w-56">
           {data.profilePhoto?.url ? (
             <img
               src={data.profilePhoto.url}
@@ -108,7 +109,7 @@ function BiodataPreview({ data }) {
         return (
           <section
             key={section.title}
-            className="mt-6 border-b border-stone-100 pb-5"
+            className="mt-6 border-b border-brand-line/60 pb-5"
           >
             <h3 className="mb-3 text-base font-semibold text-brand-dark">
               {section.title}
@@ -135,7 +136,7 @@ function BiodataPreview({ data }) {
       {education.some((item) =>
         item.qualification || item.institution || item.passingYear
       ) && (
-        <section className="mt-6 border-b border-stone-100 pb-5">
+        <section className="mt-6 border-b border-brand-line/60 pb-5">
           <h3 className="mb-3 text-base font-semibold text-brand-dark">
             Educational Qualifications
           </h3>
@@ -199,3 +200,6 @@ function BiodataPreview({ data }) {
 }
 
 export default BiodataPreview
+
+
+

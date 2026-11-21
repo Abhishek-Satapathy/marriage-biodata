@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import {
-  Heart,
   UserRound,
   Users,
   GraduationCap,
@@ -315,14 +314,11 @@ function BiodataPage() {
     <div className="min-h-screen bg-cream text-stone-800">
 
       {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-stone-200 bg-white/95 backdrop-blur">
+      <header className="sticky top-0 z-30 border-b border-brand-line bg-[#fffdf9]/95 shadow-[0_4px_24px_rgba(77,53,29,0.06)] backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
 
-          <div className="flex items-center gap-3">
-            <div className="rounded-xl bg-brand/10 p-2">
-              <Heart className="h-6 w-6 text-brand" />
-            </div>
-
+          <div className="brand-lockup">
+            <img src="/ganesha-mark.png" alt="Ganesh emblem" className="brand-mark" />
             <div>
               <h1 className="font-semibold text-brand-dark">
                 Marriage Biodata
@@ -366,8 +362,8 @@ function BiodataPage() {
 
       <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
 
-        <div className="mb-6">
-          <p className="text-xs font-semibold tracking-widest text-brand">
+        <div className="mb-6 section-heading">
+          <p className="text-xs font-semibold tracking-[0.22em] text-brand">
             PERSONAL PROFILE
           </p>
 
@@ -415,7 +411,7 @@ function BiodataPage() {
 
           {/* Desktop Sidebar */}
           <aside className="hidden lg:block">
-            <div className="sticky top-24 rounded-2xl border border-stone-200 bg-white p-3">
+            <div className="sticky top-24 rounded-2xl border border-stone-200 bg-white p-3 premium-frame">
               <p className="px-3 py-3 text-xs font-semibold uppercase tracking-wider text-stone-400">
                 Biodata Sections
               </p>
@@ -446,9 +442,9 @@ function BiodataPage() {
 
           {/* Form */}
           <section className={showPreview ? 'hidden lg:block' : ''}>
-            <div className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm sm:p-6">
+            <div className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm sm:p-6 premium-frame">
 
-              <div className="mb-6 flex items-center gap-3 border-b border-stone-100 pb-5">
+              <div className="mb-6 flex items-center gap-3 border-b border-brand-line/60 pb-5">
                 <div className="rounded-xl bg-brand/10 p-3">
                   <ActiveIcon size={20} className="text-brand" />
                 </div>
@@ -491,7 +487,7 @@ function BiodataPage() {
 
           {/* Live Preview */}
           <aside className={showPreview ? '' : 'hidden lg:block'}>
-            <div className="sticky top-24 rounded-2xl border border-stone-200 bg-white p-4 shadow-sm">
+            <div className="sticky top-24 rounded-2xl border border-stone-200 bg-white p-4 shadow-sm premium-frame">
 
               <div className="mb-4 flex items-center gap-2">
                 <Eye size={19} className="text-brand" />
@@ -521,3 +517,4 @@ function BiodataPage() {
 }
 
 export default BiodataPage
+

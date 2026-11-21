@@ -1,7 +1,7 @@
 
 function SectionHeader({ title, description }) {
   return (
-    <div className="mb-6">
+    <div className="section-heading mb-6">
       <h3 className="text-lg font-semibold text-brand-dark">
         {title}
       </h3>
@@ -16,3 +16,4 @@ function SectionHeader({ title, description }) {
 }
 
 export default SectionHeader
+

@@ -13,9 +13,10 @@ function ProfilePage({ data, onEdit }) {
 
     try {
       setDownloading(true)
+      await document.fonts.ready
       await html2pdf()
         .set({
-          margin: [8, 8, 8, 8],
+          margin: [10, 10, 10, 10],
           filename: `${data.personalDetails?.fullName || 'Marriage'}-Biodata.pdf`,
           image: { type: 'jpeg', quality: 0.98 },
           html2canvas: {
@@ -31,7 +32,7 @@ function ProfilePage({ data, onEdit }) {
           },
           pagebreak: {
             mode: ['css', 'legacy'],
-            avoid: ['section', 'img', 'tr']
+            avoid: ['.pdf-details-card', '.pdf-detail-item', '.pdf-photo-card', 'tr']
           }
         })
         .from(pdfRef.current)
@@ -48,16 +49,20 @@ function ProfilePage({ data, onEdit }) {
 
   return (
     <div className="min-h-screen bg-cream text-stone-800">
-      <header className="sticky top-0 z-30 border-b border-stone-200 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-          <div>
-            <h1 className="font-semibold text-brand-dark">Marriage Biodata</h1>
-            <p className="text-xs text-stone-500">Your Personal Profile</p>
+      <header className="sticky top-0 z-30 border-b border-brand-line bg-[#fffdf9]/95 shadow-[0_4px_24px_rgba(77,53,29,0.06)] backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
+          <div className="brand-lockup">
+            <img src="/ganesha-mark.png" alt="Ganesh emblem" className="brand-mark" />
+            <div>
+              <h1 className="font-semibold text-brand-dark">Marriage Biodata</h1>
+              <p className="text-xs text-stone-500">Your Personal Profile</p>
+            </div>
           </div>
 
-          <div className="flex gap-2">
+          <div className="profile-actions flex gap-2">
             <button
               type="button"
+              aria-label="Edit biodata"
               onClick={onEdit}
               className="flex items-center gap-2 rounded-lg border border-brand/30 px-3 py-2 text-sm text-brand-dark hover:bg-brand/5"
             >
@@ -67,6 +72,7 @@ function ProfilePage({ data, onEdit }) {
 
             <button
               type="button"
+              aria-label={downloading ? 'Generating PDF' : 'Download PDF'}
               onClick={downloadPDF}
               disabled={downloading}
               className="flex items-center gap-2 rounded-lg bg-brand px-3 py-2 text-sm font-medium text-white hover:bg-brand-dark disabled:opacity-50"
@@ -90,13 +96,13 @@ function ProfilePage({ data, onEdit }) {
           </p>
         </div>
 
-        <div className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm sm:p-8">
+        <div className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm sm:p-8 premium-frame">
           <BiodataPreview data={data} />
         </div>
 
         {/* Kundali photograph */}
         {data.kundaliPhoto?.url && (
-          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-5 shadow-sm sm:p-7">
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-5 shadow-sm sm:p-7 premium-frame">
             <div className="mb-4 flex items-center gap-2">
               <ImageIcon size={19} className="text-brand" />
               <h3 className="text-lg font-semibold text-brand-dark">
@@ -113,7 +119,7 @@ function ProfilePage({ data, onEdit }) {
 
         {/* All additional photographs */}
         {otherPhotos.length > 0 && (
-          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-5 shadow-sm sm:p-7">
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-5 shadow-sm sm:p-7 premium-frame">
             <div className="mb-4 flex items-center gap-2">
               <ImageIcon size={19} className="text-brand" />
               <h3 className="text-lg font-semibold text-brand-dark">
@@ -167,3 +173,9 @@ function ProfilePage({ data, onEdit }) {
 }
 
 export default ProfilePage
+
+
+
+
+
+
