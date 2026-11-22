@@ -21,10 +21,10 @@ const recordFailure = (ipAddress, now) => {
 
 export const requireOwner = (req, res, next) => {
   const ownerKey = process.env.OWNER_EDIT_KEY || ''
-  if (!/^\d{6}$/.test(ownerKey)) {
+  if (!/^[A-Za-z0-9_-]{6,128}$/.test(ownerKey)) {
     return res.status(503).json({
       success: false,
-      message: 'Private editing is not configured. Set OWNER_EDIT_KEY to exactly six digits.'
+      message: 'Private editing is not configured. Set OWNER_EDIT_KEY to at least six URL-safe characters.'
     })
   }
 

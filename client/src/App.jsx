@@ -1,19 +1,18 @@
 
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
-import BiodataPage from './pages/BiodataPage'
 import PublicBiodataPage from './pages/PublicBiodataPage'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Homepage - Create / Manage Biodata */}
-        <Route path="/" element={<BiodataPage />} />
+        {/* Public homepage: view only */}
+        <Route path="/" element={<PublicBiodataPage />} />
 
         {/* Public sharing link */}
         <Route path="/share/:shareId" element={<PublicBiodataPage />} />
 
-        {/* Owner edit link */}
+        {/* Owner link: edit and view after the API validates the key */}
         <Route path="/:editKey" element={<PublicBiodataPage />} />
 
         {/* Invalid routes */}
