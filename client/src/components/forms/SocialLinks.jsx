@@ -1,46 +1,48 @@
 
 import {
-  AtSign,
-  Globe,
-  Link
-} from 'lucide-react'
+  FaInstagram,
+  FaFacebook,
+  FaXTwitter,
+  FaYoutube,
+  FaGlobe
+} from 'react-icons/fa6'
 
 import FormField from '../common/FormField'
 import SectionHeader from '../common/SectionHeader'
 
 function SocialLinks({ data, onChange }) {
   const fields = [
-  {
-    name: 'instagram',
-    label: 'Instagram',
-    placeholder: 'https://instagram.com/username',
-    icon: AtSign
-  },
-  {
-    name: 'facebook',
-    label: 'Facebook',
-    placeholder: 'https://facebook.com/username',
-    icon: Globe
-  },
-  {
-    name: 'x',
-    label: 'X (Twitter)',
-    placeholder: 'https://x.com/username',
-    icon: AtSign
-  },
-  {
-    name: 'youtube',
-    label: 'YouTube',
-    placeholder: 'https://youtube.com/@username',
-    icon: Link
-  },
-  {
-    name: 'website',
-    label: 'Personal Website',
-    placeholder: 'https://example.com',
-    icon: Globe
-  }
-]
+    {
+      name: 'instagram',
+      label: 'Instagram',
+      placeholder: 'https://instagram.com/username',
+      icon: FaInstagram
+    },
+    {
+      name: 'facebook',
+      label: 'Facebook',
+      placeholder: 'https://facebook.com/username',
+      icon: FaFacebook
+    },
+    {
+      name: 'x',
+      label: 'X (Twitter)',
+      placeholder: 'https://x.com/username',
+      icon: FaXTwitter
+    },
+    {
+      name: 'youtube',
+      label: 'YouTube',
+      placeholder: 'https://youtube.com/@username',
+      icon: FaYoutube
+    },
+    {
+      name: 'website',
+      label: 'Personal Website',
+      placeholder: 'https://example.com',
+      icon: FaGlobe
+    }
+  ]
 
   return (
     <>
