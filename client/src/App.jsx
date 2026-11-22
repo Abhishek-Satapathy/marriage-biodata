@@ -11,6 +11,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/share/:shareId" element={<ProfileRoute />} />
+        <Route path="/:editKey" element={<ProfileRoute />} />
         <Route path="/" element={<ProfileRoute />} />
         <Route path="*" element={<ProfileRoute />} />
       </Routes>

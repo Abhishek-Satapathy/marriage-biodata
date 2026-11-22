@@ -6,9 +6,9 @@ import BiodataPage from './BiodataPage'
 import ProfilePage from './ProfilePage'
 
 function PublicBiodataPage() {
-  const { shareId } = useParams()
+  const { shareId, editKey: pathEditKey } = useParams()
   const [searchParams] = useSearchParams()
-  const editKey = searchParams.get('key')
+  const editKey = pathEditKey || searchParams.get('key')
   const [ownerAccess, setOwnerAccess] = useState(false)
   const [data, setData] = useState(null)
   const [message, setMessage] = useState('')
@@ -32,7 +32,7 @@ function PublicBiodataPage() {
 
           window.sessionStorage.removeItem('ownerEditKey')
           if (active) {
-            const cleanUrl = window.location.pathname + window.location.hash
+            const cleanUrl = shareId ? '/share/' + encodeURIComponent(shareId) : '/'
             window.history.replaceState({}, '', cleanUrl)
           }
         }

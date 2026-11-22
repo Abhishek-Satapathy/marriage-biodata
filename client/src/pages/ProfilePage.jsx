@@ -6,9 +6,7 @@ function ProfilePage({ data, onEdit, readOnly = false }) {
   const [copied, setCopied] = useState(false)
   const [editLinkCopied, setEditLinkCopied] = useState(false)
   const otherPhotos = data.otherPhotos || []
-  const shareUrl = data.shareId
-    ? window.location.origin + '/share/' + data.shareId
-    : ''
+  const shareUrl = window.location.origin + '/'
 
   const copyShareLink = async () => {
     if (!shareUrl) return
@@ -26,7 +24,7 @@ function ProfilePage({ data, onEdit, readOnly = false }) {
     const ownerKey = window.sessionStorage.getItem('ownerEditKey')
     if (!shareUrl || !ownerKey) return
 
-    const editUrl = shareUrl + '?key=' + encodeURIComponent(ownerKey)
+    const editUrl = shareUrl + encodeURIComponent(ownerKey)
     try {
       await navigator.clipboard.writeText(editUrl)
       setEditLinkCopied(true)

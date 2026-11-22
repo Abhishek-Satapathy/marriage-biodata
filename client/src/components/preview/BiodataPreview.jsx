@@ -14,6 +14,13 @@ function BiodataPreview({ data }) {
     youtube: Link,
     website: Globe
   }
+  const socialLabels = {
+    instagram: 'Instagram',
+    facebook: 'Facebook',
+    x: 'X (Twitter)',
+    youtube: 'YouTube',
+    website: 'Personal Website'
+  }
 
   const formatDate = (value) => {
     if (!value) return ''
@@ -176,6 +183,7 @@ function BiodataPreview({ data }) {
             {Object.entries(socialLinks).map(([name, url]) => {
               if (!url) return null
               const Icon = socialIcons[name] || Globe
+              const label = socialLabels[name] || name
               const href = /^https?:\/\//i.test(url) ? url : `https://${url}`
 
               return (
@@ -184,11 +192,12 @@ function BiodataPreview({ data }) {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  title={name}
-                  aria-label={name}
-                  className="text-brand hover:text-brand-dark"
+                  title={label}
+                  aria-label={`Open ${label} profile`}
+                  className="inline-flex items-center gap-2 rounded-full border border-brand-line bg-[#fffdf9] px-3 py-2 text-sm font-medium text-brand-dark transition hover:border-brand/40 hover:bg-brand/5"
                 >
-                  <Icon size={21} />
+                  <Icon size={17} className="shrink-0 text-brand" />
+                  <span>{label}</span>
                 </a>
               )
             })}
