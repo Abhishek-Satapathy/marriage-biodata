@@ -208,7 +208,11 @@ function BiodataDocument({ data }) {
       {section('Social Links', socialRows)}
 
       {photoItems.length > 0 && (
-        <div style={{ marginTop: '20px' }}>
+        <div className="pdf-photo-gallery" style={{
+          marginTop: '20px',
+          breakBefore: 'page',
+          pageBreakBefore: 'always'
+        }}>
           <h2 style={{
             margin: '0 0 11px', paddingBottom: '7px', borderBottom: '2px solid ' + colors.gold,
             color: colors.forest, fontSize: '12px', fontWeight: 700, letterSpacing: '0.6px',

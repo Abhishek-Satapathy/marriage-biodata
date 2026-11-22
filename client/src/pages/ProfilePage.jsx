@@ -32,6 +32,7 @@ function ProfilePage({ data, onEdit }) {
           },
           pagebreak: {
             mode: ['css', 'legacy'],
+            before: ['.pdf-photo-gallery'],
             avoid: ['.pdf-details-card', '.pdf-detail-item', '.pdf-photo-card', 'tr']
           }
         })
