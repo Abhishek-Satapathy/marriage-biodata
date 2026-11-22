@@ -5,23 +5,17 @@ const api = axios.create({
 })
 
 api.interceptors.request.use((config) => {
-  const token = window.sessionStorage.getItem('ownerToken')
-  if (token) config.headers.Authorization = 'Bearer ' + token
+  const ownerKey = window.sessionStorage.getItem('ownerEditKey')
+  if (ownerKey) config.headers.Authorization = 'Bearer ' + ownerKey
   return config
 })
 
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (
-      error.response?.status === 401 &&
-      window.sessionStorage.getItem('ownerToken') &&
-      !error.config?.url?.includes('/auth/login')
-    ) {
-      window.sessionStorage.removeItem('ownerToken')
-      if (!window.location.pathname.startsWith('/share/')) {
-        window.location.assign('/')
-      }
+    if (error.response?.status === 401) {
+      window.sessionStorage.removeItem('ownerEditKey')
+      if (window.location.pathname.startsWith('/manage/')) window.location.assign('/')
     }
     return Promise.reject(error)
   }

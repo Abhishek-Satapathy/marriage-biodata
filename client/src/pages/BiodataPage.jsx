@@ -58,7 +58,7 @@ const toDateInputValue = (value) => {
   return /^\d{4}-\d{2}-\d{2}$/.test(datePart) ? datePart : ''
 }
 
-function BiodataPage({ onLogout }) {
+function BiodataPage() {
   const [formData, setFormData] = useState(initialBiodata)
   const [activeSection, setActiveSection] = useState('personal')
   const [showPreview, setShowPreview] = useState(false)
@@ -304,7 +304,6 @@ function BiodataPage({ onLogout }) {
     return (
       <ProfilePage
         data={formData}
-        onLogout={onLogout}
         onEdit={() => {
           setShowProfile(false)
           setMessage('')
@@ -333,13 +332,6 @@ function BiodataPage({ onLogout }) {
           </div>
 
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={onLogout}
-              className="flex items-center gap-2 rounded-lg border border-stone-200 px-3 py-2 text-sm text-stone-600"
-            >
-              <span>Sign out</span>
-            </button>
 
             <button
               type="button"

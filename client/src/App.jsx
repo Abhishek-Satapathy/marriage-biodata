@@ -1,26 +1,13 @@
-import { useState } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import OwnerLogin from './components/auth/OwnerLogin'
+import { BrowserRouter, Route, Routes, useParams } from 'react-router-dom'
 import BiodataPage from './pages/BiodataPage'
 import PublicBiodataPage from './pages/PublicBiodataPage'
 
-function OwnerArea() {
-  const [signedIn, setSignedIn] = useState(
-    () => Boolean(window.sessionStorage.getItem('ownerToken'))
-  )
-
-  if (!signedIn) {
-    return <OwnerLogin onLogin={() => setSignedIn(true)} />
-  }
+function OwnerManagePage() {
+  const { editKey } = useParams()
+  window.sessionStorage.setItem('ownerEditKey', editKey)
 
   return (
-    <BiodataPage
-      key="owner"
-      onLogout={() => {
-        window.sessionStorage.removeItem('ownerToken')
-        setSignedIn(false)
-      }}
-    />
+    <BiodataPage key={editKey} />
   )
 }
 
@@ -28,8 +15,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/manage/:editKey" element={<OwnerManagePage />} />
         <Route path="/share/:shareId" element={<PublicBiodataPage />} />
-        <Route path="*" element={<OwnerArea />} />
+        <Route path="/" element={<PublicBiodataPage />} />
+        <Route path="*" element={<PublicBiodataPage />} />
       </Routes>
     </BrowserRouter>
   )

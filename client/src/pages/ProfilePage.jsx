@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Check, Copy, Edit, Image as ImageIcon, LogOut, Share2 } from 'lucide-react'
+import { Check, Copy, Edit, Image as ImageIcon, Share2 } from 'lucide-react'
 import BiodataPreview from '../components/preview/BiodataPreview'
 
-function ProfilePage({ data, onEdit, onLogout, readOnly = false }) {
+function ProfilePage({ data, onEdit, readOnly = false }) {
   const [copied, setCopied] = useState(false)
   const otherPhotos = data.otherPhotos || []
   const shareUrl = data.shareId
@@ -52,16 +52,6 @@ function ProfilePage({ data, onEdit, onLogout, readOnly = false }) {
               >
                 <Edit size={16} />
                 <span>Edit</span>
-              </button>
-              <button
-                type="button"
-                onClick={onLogout}
-                className="flex items-center gap-2 rounded-lg border border-stone-200 px-3 py-2 text-sm text-stone-600 hover:bg-white"
-                aria-label="Sign out"
-                title="Sign out"
-              >
-                <LogOut size={16} />
-                <span>Sign out</span>
               </button>
             </div>
           )}

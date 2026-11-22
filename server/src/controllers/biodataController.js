@@ -45,6 +45,19 @@ export const getBiodata = async (req, res) => {
   }
 }
 
+export const getPublicBiodata = async (req, res) => {
+  try {
+    const biodata = await Biodata.findOne()
+    if (!biodata) {
+      return res.status(404).json({ success: false, message: 'Biodata not found' })
+    }
+    res.set('Cache-Control', 'no-store')
+    return res.status(200).json({ success: true, data: biodata })
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message })
+  }
+}
+
 export const getSharedBiodata = async (req, res) => {
   try {
     const biodata = await Biodata.findOne({ shareId: req.params.shareId })

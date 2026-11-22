@@ -1,7 +1,7 @@
 import express from 'express'
-
 import {
   getBiodata,
+  getPublicBiodata,
   getSharedBiodata,
   createBiodata,
   updateBiodata,
@@ -11,6 +11,7 @@ import { requireOwner } from '../middleware/authMiddleware.js'
 
 const router = express.Router()
 
+router.get('/public', getPublicBiodata)
 router.get('/share/:shareId', getSharedBiodata)
 router.get('/', requireOwner, getBiodata)
 router.post('/', requireOwner, createBiodata)

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { LoaderCircle } from 'lucide-react'
 import { useParams } from 'react-router-dom'
-import { getSharedBiodata } from '../services/biodataService'
+import { getPublicBiodata, getSharedBiodata } from '../services/biodataService'
 import ProfilePage from './ProfilePage'
 
 function PublicBiodataPage() {
@@ -13,7 +13,7 @@ function PublicBiodataPage() {
   useEffect(() => {
     let active = true
 
-    getSharedBiodata(shareId)
+    (shareId ? getSharedBiodata(shareId) : getPublicBiodata())
       .then((response) => {
         if (active) setData(response.data)
       })
