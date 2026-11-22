@@ -136,12 +136,19 @@ function BiodataPreview({ data, profileNameRef }) {
               {values.map(([label, value]) => (
                 <div
                   key={label}
-                  className="grid grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-2 text-sm sm:gap-3"
+                  className={`grid gap-2 text-sm ${
+                    label === "Email"
+                      ? "grid-cols-1 sm:grid-cols-[minmax(125px,0.8fr)_1.2fr]"
+                      : "grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]"
+                  }`}
                 >
                   <span className="text-stone-500">{label}</span>
+
                   <span
-                    className={`min-w-0 text-right font-medium text-stone-800 ${
-                      label === "Email" ? "break-all" : "break-words"
+                    className={`min-w-0 font-medium text-stone-800 ${
+                      label === "Email"
+                        ? "break-all text-left sm:text-right"
+                        : "break-words text-right"
                     }`}
                   >
                     {value}
