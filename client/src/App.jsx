@@ -1,19 +1,23 @@
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
-import PublicBiodataPage from './pages/PublicBiodataPage'
 
-function ProfileRoute() {
-  const location = useLocation()
-  return <PublicBiodataPage key={location.pathname + location.search} />
-}
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
+import BiodataPage from './pages/BiodataPage'
+import PublicBiodataPage from './pages/PublicBiodataPage'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/share/:shareId" element={<ProfileRoute />} />
-        <Route path="/:editKey" element={<ProfileRoute />} />
-        <Route path="/" element={<ProfileRoute />} />
-        <Route path="*" element={<ProfileRoute />} />
+        {/* Homepage - Create / Manage Biodata */}
+        <Route path="/" element={<BiodataPage />} />
+
+        {/* Public sharing link */}
+        <Route path="/share/:shareId" element={<PublicBiodataPage />} />
+
+        {/* Owner edit link */}
+        <Route path="/:editKey" element={<PublicBiodataPage />} />
+
+        {/* Invalid routes */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   )
