@@ -1,13 +1,18 @@
-
 import mongoose from 'mongoose'
 
 const biodataSchema = new mongoose.Schema(
   {
+    shareId: {
+      type: String,
+      unique: true,
+      index: true
+    },
+
     personalDetails: {
       fullName: String,
       dateOfBirthCertificate: Date,
       dateOfBirthOriginal: Date,
-      dateOfTime: String, // HH:mm format
+      dateOfTime: String,
       zodiacSign: String,
       star: String,
       gender: String,

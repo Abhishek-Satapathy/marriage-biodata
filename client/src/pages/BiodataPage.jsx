@@ -58,7 +58,7 @@ const toDateInputValue = (value) => {
   return /^\d{4}-\d{2}-\d{2}$/.test(datePart) ? datePart : ''
 }
 
-function BiodataPage() {
+function BiodataPage({ onLogout }) {
   const [formData, setFormData] = useState(initialBiodata)
   const [activeSection, setActiveSection] = useState('personal')
   const [showPreview, setShowPreview] = useState(false)
@@ -186,12 +186,14 @@ function BiodataPage() {
         }))
       }
 
-      if (isSaved) {
-        await updateBiodata(payload)
-      } else {
-        await createBiodata(payload)
-        setIsSaved(true)
+      const response = isSaved
+        ? await updateBiodata(payload)
+        : await createBiodata(payload)
+
+      if (response.data?.shareId) {
+        setFormData((current) => ({ ...current, shareId: response.data.shareId }))
       }
+      if (!isSaved) setIsSaved(true)
 
       setMessage('Biodata saved successfully.')
       setShowProfile(true)
@@ -302,6 +304,7 @@ function BiodataPage() {
     return (
       <ProfilePage
         data={formData}
+        onLogout={onLogout}
         onEdit={() => {
           setShowProfile(false)
           setMessage('')
@@ -324,12 +327,20 @@ function BiodataPage() {
                 Marriage Biodata
               </h1>
               <p className="text-xs text-stone-500">
-                Personal Profile Builder
+                Private Profile Manager
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={onLogout}
+              className="flex items-center gap-2 rounded-lg border border-stone-200 px-3 py-2 text-sm text-stone-600"
+            >
+              <span>Sign out</span>
+            </button>
+
             <button
               type="button"
               onClick={() => setShowPreview((prev) => !prev)}

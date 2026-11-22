@@ -4,6 +4,7 @@ import express from 'express'
 import cors from 'cors'
 
 import connectDB from './config/db.js'
+import authRoutes from './routes/authRoutes.js'
 import biodataRoutes from './routes/biodataRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
 
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
   })
 })
 
+app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/biodata', biodataRoutes)
 app.use('/api/v1/upload', uploadRoutes)
 

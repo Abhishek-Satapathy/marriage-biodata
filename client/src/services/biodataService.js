@@ -1,8 +1,12 @@
-
 import api from './api'
 
 export const getBiodata = async () => {
   const response = await api.get('/biodata')
+  return response.data
+}
+
+export const getSharedBiodata = async (shareId) => {
+  const response = await api.get('/biodata/share/' + encodeURIComponent(shareId))
   return response.data
 }
 
