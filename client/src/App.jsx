@@ -1,24 +1,18 @@
-import { BrowserRouter, Route, Routes, useParams } from 'react-router-dom'
-import BiodataPage from './pages/BiodataPage'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import PublicBiodataPage from './pages/PublicBiodataPage'
 
-function OwnerManagePage() {
-  const { editKey } = useParams()
-  window.sessionStorage.setItem('ownerEditKey', editKey)
-
-  return (
-    <BiodataPage key={editKey} />
-  )
+function ProfileRoute() {
+  const location = useLocation()
+  return <PublicBiodataPage key={location.pathname + location.search} />
 }
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/manage/:editKey" element={<OwnerManagePage />} />
-        <Route path="/share/:shareId" element={<PublicBiodataPage />} />
-        <Route path="/" element={<PublicBiodataPage />} />
-        <Route path="*" element={<PublicBiodataPage />} />
+        <Route path="/share/:shareId" element={<ProfileRoute />} />
+        <Route path="/" element={<ProfileRoute />} />
+        <Route path="*" element={<ProfileRoute />} />
       </Routes>
     </BrowserRouter>
   )

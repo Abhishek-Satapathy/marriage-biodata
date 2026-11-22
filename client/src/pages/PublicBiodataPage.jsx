@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
 import { LoaderCircle } from 'lucide-react'
-import { useParams } from 'react-router-dom'
-import { getPublicBiodata, getSharedBiodata } from '../services/biodataService'
+import { useParams, useSearchParams } from 'react-router-dom'
+import { getBiodata, getPublicBiodata, getSharedBiodata } from '../services/biodataService'
+import BiodataPage from './BiodataPage'
 import ProfilePage from './ProfilePage'
 
 function PublicBiodataPage() {
   const { shareId } = useParams()
+  const [searchParams] = useSearchParams()
+  const editKey = searchParams.get('key')
+  const [ownerAccess, setOwnerAccess] = useState(false)
   const [data, setData] = useState(null)
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(true)
@@ -13,10 +17,34 @@ function PublicBiodataPage() {
   useEffect(() => {
     let active = true
 
-    (shareId ? getSharedBiodata(shareId) : getPublicBiodata())
-      .then((response) => {
-        if (active) setData(response.data)
-      })
+    const load = async () => {
+      if (editKey) {
+        window.sessionStorage.setItem('ownerEditKey', editKey)
+        try {
+          await getBiodata()
+          if (active) setOwnerAccess(true)
+          return
+        } catch (error) {
+          if (error.response?.status === 404) {
+            if (active) setOwnerAccess(true)
+            return
+          }
+
+          window.sessionStorage.removeItem('ownerEditKey')
+          if (active) {
+            const cleanUrl = window.location.pathname + window.location.hash
+            window.history.replaceState({}, '', cleanUrl)
+          }
+        }
+      } else {
+        window.sessionStorage.removeItem('ownerEditKey')
+      }
+
+      const response = shareId ? await getSharedBiodata(shareId) : await getPublicBiodata()
+      if (active) setData(response.data)
+    }
+
+    load()
       .catch((error) => {
         if (active) {
           setMessage(error.response?.data?.message || 'Unable to open this biodata link.')
@@ -27,7 +55,7 @@ function PublicBiodataPage() {
       })
 
     return () => { active = false }
-  }, [shareId])
+  }, [editKey, shareId])
 
   useEffect(() => {
     if (data?.personalDetails?.fullName) {
@@ -43,6 +71,8 @@ function PublicBiodataPage() {
       </div>
     )
   }
+
+  if (ownerAccess) return <BiodataPage key={editKey} />
 
   if (!data) {
     return (

@@ -15,7 +15,6 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       window.sessionStorage.removeItem('ownerEditKey')
-      if (window.location.pathname.startsWith('/manage/')) window.location.assign('/')
     }
     return Promise.reject(error)
   }

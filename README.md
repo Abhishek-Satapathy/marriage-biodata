@@ -1,6 +1,6 @@
 # Marriage Biodata
 
-A web-based marriage biodata profile with a public read-only share link and a separate private editing link. There is no sign-in screen.
+A web-based marriage biodata profile with one share URL. It is read-only without an owner key and opens the editor when the key is added. There is no sign-in screen.
 
 ## Run locally
 
@@ -13,12 +13,12 @@ A web-based marriage biodata profile with a public read-only share link and a se
 5. Start the API from `server` with `npm run dev`.
 6. Start the website from `client` with `npm run dev`.
 
-Open `http://localhost:5173/manage/<OWNER_EDIT_KEY>` to edit the biodata. Open `http://localhost:5173/share/<share-id>` to view the public read-only profile. After saving, use **Share** or **Copy link** in the editor to copy the public URL. Changes appear at that same URL.
+Open `http://localhost:5173/share/<share-id>` to view the read-only profile. To edit it, use that same URL with `?key=<OWNER_EDIT_KEY>` appended, for example `http://localhost:5173/share/<share-id>?key=<OWNER_EDIT_KEY>`. After saving, the normal share URL continues to show the updated profile. Use **Share** or **Copy link** to copy the URL without the key for visitors.
 
-The edit URL is a secret bearer link: anyone who has it can edit the biodata and upload photos. Keep it private and do not put `OWNER_EDIT_KEY` in a client environment file or commit it. To revoke an exposed edit link, replace `OWNER_EDIT_KEY` in the server environment and restart/redeploy the server.
+The key is a secret bearer credential: anyone who has the URL with `?key=...` can edit the biodata and upload photos. Keep that version private; share the same URL without the key with visitors. Do not put `OWNER_EDIT_KEY` in a client environment file or commit it. To revoke an exposed key, replace it in the server environment and restart/redeploy the server.
 
 ## Deploy
 
 Deploy the client and API to public HTTPS addresses. Set `VITE_API_BASE_URL` to the deployed API's `/api/v1` URL, set the server's `CLIENT_URL` to the deployed website origin, and configure the server environment with `MONGODB_URI`, `IMAGEKIT_PRIVATE_KEY`, and a strong `OWNER_EDIT_KEY`.
 
-The website host must serve the client app's `index.html` for direct visits to `/share/<share-id>` and `/manage/<edit-key>`. Use the public `/share/<share-id>` URL when sharing the biodata; never share the private `/manage/<edit-key>` URL.
+The website host must serve the client app's `index.html` for direct visits to `/share/<share-id>`. Use the public `/share/<share-id>` URL when sharing the biodata; share the URL without its `key` parameter with visitors.

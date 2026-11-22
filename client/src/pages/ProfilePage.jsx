@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { Check, Copy, Edit, Image as ImageIcon, Share2 } from 'lucide-react'
+import { Check, Copy, Edit, Image as ImageIcon, KeyRound, Share2 } from 'lucide-react'
 import BiodataPreview from '../components/preview/BiodataPreview'
 
 function ProfilePage({ data, onEdit, readOnly = false }) {
   const [copied, setCopied] = useState(false)
+  const [editLinkCopied, setEditLinkCopied] = useState(false)
   const otherPhotos = data.otherPhotos || []
   const shareUrl = data.shareId
     ? window.location.origin + '/share/' + data.shareId
@@ -18,6 +19,20 @@ function ProfilePage({ data, onEdit, readOnly = false }) {
       window.setTimeout(() => setCopied(false), 2200)
     } catch {
       window.prompt('Copy your biodata link:', shareUrl)
+    }
+  }
+
+  const copyEditLink = async () => {
+    const ownerKey = window.sessionStorage.getItem('ownerEditKey')
+    if (!shareUrl || !ownerKey) return
+
+    const editUrl = shareUrl + '?key=' + encodeURIComponent(ownerKey)
+    try {
+      await navigator.clipboard.writeText(editUrl)
+      setEditLinkCopied(true)
+      window.setTimeout(() => setEditLinkCopied(false), 2200)
+    } catch {
+      window.prompt('Copy your private edit link:', editUrl)
     }
   }
 
@@ -44,6 +59,17 @@ function ProfilePage({ data, onEdit, readOnly = false }) {
               >
                 {copied ? <Check size={16} /> : <Share2 size={16} />}
                 <span>{copied ? 'Link copied' : 'Share'}</span>
+              </button>
+              <button
+                type="button"
+                onClick={copyEditLink}
+                disabled={!shareUrl}
+                className="flex items-center gap-2 rounded-lg border border-brand/30 px-3 py-2 text-sm text-brand-dark hover:bg-brand/5 disabled:opacity-50"
+                title="Copy this same profile URL with your private edit key"
+                aria-label="Copy edit link"
+              >
+                {editLinkCopied ? <Check size={16} /> : <KeyRound size={16} />}
+                <span className="hidden sm:inline">{editLinkCopied ? 'Edit link copied' : 'Copy edit link'}</span>
               </button>
               <button
                 type="button"
